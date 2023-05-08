@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(_gameOverCallTime);
         _gameplayMenu.SetActive(false);
-        _gameOverMenu.SetActive(true);  
+        _gameOverMenu.SetActive(true);
+        scoreManager.SetFinalScore();
     }
 }

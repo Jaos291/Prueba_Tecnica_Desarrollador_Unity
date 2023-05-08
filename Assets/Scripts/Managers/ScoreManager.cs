@@ -10,6 +10,9 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _score;
     [SerializeField] private TextMeshProUGUI _scoreToAdd;
 
+    [Header("Game Over final Score")]
+    [SerializeField] private TextMeshProUGUI _finalScore;
+
     [Header("Score To Add Game Object")]
     [SerializeField] private GameObject _scoreToAddGO;
 
@@ -43,5 +46,10 @@ public class ScoreManager : MonoBehaviour
         {
             _scoreToAddGO.SetActive(false);
         }
-    }      
+    }   
+    
+    public void SetFinalScore()
+    {
+        _finalScore.text = _score.text;
+    }
 }

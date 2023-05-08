@@ -116,4 +116,5 @@ public class UIManager : MonoBehaviour
     {
         _gameManager.StartGame(choosedBird);
     }
+
 }
