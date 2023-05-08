@@ -12,6 +12,18 @@ public class SlingShot : MonoBehaviour
     [SerializeField]
     private float _timeToDivideBird = 0.25f;
 
+    [SerializeField]
+    private float _minRandomRangeY;
+
+    [SerializeField]
+    private float _maxRandomRangeY;
+
+    [SerializeField]
+    private float _minRandomRangeX;
+
+    [SerializeField]
+    private float _maxRandomRangeX;
+
     [HideInInspector]
     public float TimeSinceThrown;
 
@@ -201,7 +213,6 @@ public class SlingShot : MonoBehaviour
 
     IEnumerator DivideBird(float seconds) 
     {
-        float constDist = -0.5f;
         List<GameObject> dividedBirds = new List<GameObject>();
         yield return new WaitForSeconds(seconds);
         for (int i = 0; i < 3; i++)
@@ -214,16 +225,22 @@ public class SlingShot : MonoBehaviour
         }
         BirdToThrow.GetComponent<SpriteRenderer>().enabled = false;
         BirdToThrow.GetComponent<CircleCollider2D>().enabled = false;
-
+        BirdToThrow.GetComponent<TrailRenderer>().enabled = false;
         for (int i = 0; i < dividedBirds.Count; i++)
         {
             dividedBirds[i].transform.SetParent(BirdToThrow.transform);
             dividedBirds[i].transform.position = new Vector3(
                 dividedBirds[i].transform.position.x,
-                dividedBirds[i].transform.position.y + constDist,
+                dividedBirds[i].transform.position.y,
                 dividedBirds[i].transform.position.z
                 );
-            constDist += _newBirdDistance;
+            if (i%2==0)
+            {
+                dividedBirds[i].gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(
+                    dividedBirds[i].gameObject.GetComponent<Rigidbody2D>().velocity.x * (UnityEngine.Random.Range(_minRandomRangeX, _maxRandomRangeX)),
+                    dividedBirds[i].gameObject.GetComponent<Rigidbody2D>().velocity.y * (UnityEngine.Random.Range(_minRandomRangeY, _maxRandomRangeY))
+                    );
+            }
         }
     }
 }
